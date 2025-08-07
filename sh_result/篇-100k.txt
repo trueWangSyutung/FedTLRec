@@ -1,0 +1,1 @@
+2025-08-05 11-39-50-layers: [64, 32, 16, 8]-lr: 0.1-clients_sample_ratio: 1.0-num_round: 100-neighborhood_size: 0-mp_layers: 1-negatives: 4-lr_eta: 80-batch_size: 256-hr: 0.9469777306468717-ndcg: 0.7997445877699513-best_round: 99-similarity_metric: cosine-neighborhood_threshold: 1.0-reg: 1.0
