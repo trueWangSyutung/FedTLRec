@@ -1,0 +1,9 @@
+*.npy
+*.json
+q.py
+*.zip
+log/
+checkpoints/
+sh_result/
+
+
