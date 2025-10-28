@@ -1,5 +1,4 @@
 # Kmean-Lora PFedRec:  K-means-based CoRA Federated Learning for Recommendation 
-# Kmean-Lora PFedRec: K-means-based CoRA Federated Learning for Recommendation
 
 ## 项目概述
 
