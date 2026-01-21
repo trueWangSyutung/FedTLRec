@@ -1,4 +1,5 @@
-# Kmean-Lora PFedRec:  K-means-based CoRA Federated Learning for Recommendation 
+# FedTLRec: Federated Recommendation with Transformer-based Parameter Aggregation and LoRA Compression
+
 
 ## 项目概述
 
