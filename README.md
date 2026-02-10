@@ -101,7 +101,9 @@ Main configuration items include:
 - `batch_size`: Batch size
 - `local_epoch`: Number of local training epochs
 - `clients_sample_ratio`: Client sampling ratio
-
+- `use_kmean`: Whether K-means clustering is enabled
+- `dp`: Differential privacy noise coefficient
+- 
 ## Cite This Article
 ```bibtex
 @article{Wang2026FedTLRec,
@@ -122,6 +124,4 @@ Main configuration items include:
 ```
 
 
-- `use_kmean`: Whether K-means clustering is enabled
 
-- `dp`: Differential privacy noise coefficient
