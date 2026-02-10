@@ -1,83 +1,127 @@
 # FedTLRec: Federated Recommendation with Transformer-based Parameter Aggregation and LoRA Compression
 
+## Project Overview
 
-## 项目概述
+This project implements a federated learning-based recommender system, employing a combination of K-means clustering and CoRA (Collaborative LoRA) techniques to improve the performance and efficiency of the recommender system.
 
-本项目实现了一个基于联邦学习的推荐系统，采用K-means聚类和CoRA（Collaborative LoRA）技术相结合的方式，旨在提高推荐系统的性能和效率。
+### Core Features
 
-### 核心特性
+- **Federated Learning Architecture**
 
-- **联邦学习架构**
-- **K-means聚类**
-- **CoRA技术**
-- **个性化推荐**
+- **K-means Clustering**
 
-## 项目结构
+- **CoRA Technology**
+
+- **Personalized Recommendation**
+
+## Project Structure
 
 ```bash
-├── data.py              # 数据处理和加载模块
-├── engine.py            # 联邦学习引擎，负责训练和评估逻辑
-├── fedmodel.py          # 服务端模型定义
-├── mlp.py               # 客户端MLP模型和CoRA嵌入实现
-├── utils.py             # 工具函数集合
-├── metrics.py           # 评估指标计算
-└── README.md            # 项目说明文档
+
+├── data.py # Data processing and loading module
+
+├── engine.py # Federated learning engine, responsible for training and evaluation logic
+
+├── fedmodel.py # Server-side model definition
+
+├── mlp.py # Client-side MLP model and CoRA embedding implementation
+
+├── utils.py # Collection of utility functions
+
+├── metrics.py # Evaluation metric calculation
+
+└── README.md # Project documentation
+
 ```
 
+## Main Components
 
-## 主要组件
+### 1. Data Processing ([data.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py))
 
-### 1. 数据处理 ([data.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py))
-- [UserItemRatingDataset](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py#L8-L25): 用户-物品评分数据集包装器
-- [SampleGenerator](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py#L27-L153): 数据预处理和负采样生成器
-- 支持显式反馈和隐式反馈两种模式
+- [UserItemRatingDataset](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py#L8-L25): User-item rating dataset wrapper
 
-### 2. 客户端模型 ([mlp.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py))
-- [CoRACommonEmbedding](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L46-L108): 实现LoRA嵌入层，支持秩自适应和SVD初始化
-- [MLP](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L111-L204): 多层感知机推荐模型，可选择使用Transformer或KAN层
-- 支持多种激活函数和网络配置
+- [SampleGenerator](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/data.py#L27-L153): Data preprocessing and negative sampling generator
 
-### 3. 服务端模型 ([fedmodel.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py))
-- [ServiceModel](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py#L191-L236): 基于Transformer的服务端聚合模型
-- [ServiceModelMLP](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py#L94-L150): 基于MLP的服务端聚合模型（备用方案）
-- 负责聚合来自客户端的参数并生成全局知识
+- Supports both explicit and implicit feedback modes
 
-### 4. 联邦学习引擎 ([engine.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/engine.py))
-- [Engine](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/engine.py#L15-L361): 核心训练引擎，管理联邦学习流程
-- 支持K-means聚类和普通分组两种聚合策略
-- 实现差分隐私保护机制
-- 包含完整的训练和评估循环
+### 2. Client-side model ([mlp.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py))
 
+- [CoRACommonEmbedding](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L46-L108): Implements LoRA embedding layers, supporting rank adaptation and SVD initialization
 
-## 运行环境
+- [MLP](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L111-L204): Multilayer perceptron recommendation model, with the option to use Transformer or KAN layers
+
+- Supports multiple activation functions and network configurations
+
+### 3. Server-side model ([fedmodel.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py))
+
+- [ServiceModel](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py#L191-L236): Transformer-based server-side aggregation model
+
+- [ServiceModelMLP](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/fedmodel.py#L94-L150): Server-side aggregation model based on MLP (backup solution)
+
+- Responsible for aggregating parameters from clients and generating global knowledge
+
+### 4. Federated Learning Engine ([engine.py](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/engine.py))
+
+- [Engine](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/engine.py#L15-L361): Core training engine, managing the federated learning process
+
+- Supports two aggregation strategies: K-means clustering and ordinary grouping
+
+- Implements differential privacy protection mechanism
+
+- Includes complete training and evaluation loops
+
+## Runtime Environment
 
 - Python 3.9+
+
 - PyTorch 1.10+
-- 相关依赖库：scikit-learn, numpy, pandas, tqdm等
 
-## 使用方法
+- Related dependencies: scikit-learn, numpy, pandas, tqdm, etc.
 
-1. 准备数据集（MovieLens等标准推荐系统数据集格式）
-2. 配置模型参数（在主训练脚本中设置）
-3. 运行训练脚本：
+## Usage
+
+1. Prepare the dataset (standard recommendation system dataset format such as MovieLens)
+
+2. Configure model parameters (set in the main training script)
+
+3. Run the training script:
 
 ```bash
 python main.py --config config.json
+
+```
+
+## Configuration Parameter Description
+
+Main configuration items include:
+- [latent_dim](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L117-L117): Embedding dimension
+- [r](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/sh_result/r.py#L0-L92): LoRA rank parameter
+- [num_users](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L115-L115), [num_items](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L116-L116): Number of users and items
+- `lr`: Learning rate
+- `batch_size`: Batch size
+- `local_epoch`: Number of local training epochs
+- `clients_sample_ratio`: Client sampling ratio
+
+## Cite This Article
+```bibtex
+@article{Wang2026FedTLRec,
+  author = {Xudong Wang and Ruixin Zhao},
+  title = {FedTLRec: Federated Recommendation with Transformer-based Parameter Aggregation and LoRA Compression},
+  journal = {ICCK Transactions on Machine Intelligence},
+  year = {2026},
+  volume = {2},
+  number = {2},
+  pages = {65-76},
+  doi = {10.62762/TMI.2025.882476},
+  url = {https://www.icck.org/article/abs/TMI.2025.882476},
+  abstract = {Federated learning has emerged as a key paradigm in privacy-preserving computing due to its "data usable but not visible" property, enabling users to collaboratively train models without sharing raw data. Motivated by this, federated recommendation systems offer a promising architecture that balances user privacy with recommendation accuracy through distributed collaborative learning. However, existing federated recommendation systems face significant challenges in balancing model performance, communication efficiency, and user privacy. In this paper, we propose FedTLRec (Federated Recommendation with Transformer-based Parameter Aggregation and Collaborative LoRA), which introduces a federated recommendation framework that integrates Low-Rank Adaptation (LoRA) for parameter compression and Transformer-based aggregation. It addresses key challenges in communication efficiency and model performance by compressing client updates via LoRA and employing a Transformer model with attention mechanisms to effectively aggregate parameters from multiple clients. A K-means clustering strategy further enhances efficiency by grouping similar clients. Experiments on real-world datasets show that FedTLRec achieves superior recommendation accuracy with significantly reduced communication costs, while maintaining robust performance in client dropout scenarios. Code is available at: https://github.com/trueWangSyutung/FedTLRec.},
+  keywords = {federated recommendation, low-rank adaptation, transformer},
+  issn = {3068-7403},
+  publisher = {Institute of Central Computation and Knowledge}
+}
 ```
 
 
-## 配置参数说明
+- `use_kmean`: Whether K-means clustering is enabled
 
-主要配置项包括：
-- [latent_dim](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L117-L117): 嵌入维度
-- [r](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/sh_result/r.py#L0-L92): LoRA秩参数
-- [num_users](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L115-L115), [num_items](file:///Users/wxd2zrx/Desktop/desktop/GPFedRec/mlp.py#L116-L116): 用户和物品数量
-- `lr`: 学习率
-- `batch_size`: 批处理大小
-- `local_epoch`: 本地训练轮数
-- `clients_sample_ratio`: 客户端采样比例
-- `use_kmean`: 是否启用K-means聚类
-- `dp`: 差分隐私噪声系数
-
-
-
+- `dp`: Differential privacy noise coefficient
